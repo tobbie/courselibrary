@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  courselibrary.api:
+    container_name: course-library-api
+    image: ${DOCKER_REGISTRY-}courselibrary
+    build:
+      context: .
+      dockerfile: CourseLibrary.API/Dockerfile
+    depends_on:
+            - sql-server-db
+  sql-server-db:
+        container_name: docker_sqlserver
+        image: "mcr.microsoft.com/mssql/server:2019-latest"
+        ports:
+         - "1433:1433"
+        environment:
+            SA_PASSWORD: "0Lakunle_"
+            ACCEPT_EULA: "Y"
+
+  
