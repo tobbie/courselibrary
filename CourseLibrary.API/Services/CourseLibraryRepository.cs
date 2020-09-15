@@ -143,8 +143,6 @@ namespace CourseLibrary.API.Services
             }
 
             return collection.ToList();
-
-            
         }
 
         public IEnumerable<Author> GetAuthors(IEnumerable<Guid> authorIds)
