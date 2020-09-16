@@ -1,5 +1,6 @@
 ﻿using CourseLibrary.API.DbContexts;
-using CourseLibrary.API.Entities; 
+using CourseLibrary.API.Entities;
+using CourseLibrary.API.ResourceParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,21 +123,26 @@ namespace CourseLibrary.API.Services
             return _context.Authors.ToList<Author>();
         }
 
-        public IEnumerable<Author> GetAuthors(string mainCategory, string searchQuery)
+        public IEnumerable<Author> GetAuthors(AuthorsResourceParameters authorsReosurceParameters)
+
         {
-            if (string.IsNullOrWhiteSpace(mainCategory) && string.IsNullOrWhiteSpace(searchQuery)) {
+            if (authorsReosurceParameters == null) {
+                throw new ArgumentException(nameof(authorsReosurceParameters));
+            }
+
+            if (string.IsNullOrWhiteSpace(authorsReosurceParameters.MainCategory) && string.IsNullOrWhiteSpace(authorsReosurceParameters.SearchQuery)) {
                 return GetAuthors();
             }
 
             var collection = _context.Authors as IQueryable<Author>;
-            if (!string.IsNullOrWhiteSpace(mainCategory))
+            if (!string.IsNullOrWhiteSpace(authorsReosurceParameters.MainCategory))
             {
-                mainCategory = mainCategory.Trim();
+                var mainCategory = authorsReosurceParameters.MainCategory.Trim();
                 collection = collection.Where(a => a.MainCategory == mainCategory);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchQuery)) {
-                searchQuery = searchQuery.Trim();
+            if (!string.IsNullOrWhiteSpace(authorsReosurceParameters.SearchQuery)) {
+                var searchQuery = authorsReosurceParameters.SearchQuery.Trim();
                 collection = collection.Where(a => a.MainCategory.Contains(searchQuery)
                                                  || a.FirstName.Contains(searchQuery)
                                                  || a.LastName.Contains(searchQuery));
