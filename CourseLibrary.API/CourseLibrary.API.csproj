@@ -12,11 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Profiles\" />
-    <Folder Include="ResourceParameters\" />
-    <Folder Include="ValidationAttributes\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
@@ -35,5 +30,6 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.2" />
   </ItemGroup>
 </Project>
