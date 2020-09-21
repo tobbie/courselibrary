@@ -16,6 +16,7 @@ namespace CourseLibrary.API.ResourceParameters
         }
 
         public string OrderBy { get; set; } = "Name";
+        public string Fields { get; set; }
 
     }
 }
