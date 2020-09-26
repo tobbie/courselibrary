@@ -17,6 +17,7 @@ namespace CourseLibrary.API.Controllers
 {
     [ApiController]
     [Route("api/authors/{authorId}/courses")]
+    [ResponseCache(CacheProfileName = "240SecondsCacheProfile")] //for controller wide caching
     public class CoursesController : ControllerBase
     {
         private readonly ICourseLibraryRepository _courseLibraryRepository;
@@ -39,6 +40,7 @@ namespace CourseLibrary.API.Controllers
         }
 
         [HttpGet("{courseId}", Name = "GetCourseForAuthor")]
+        [ResponseCache(Duration =120, Location = ResponseCacheLocation.Any)] // for action method level only caching
         public ActionResult<CourseDto> GetCourseForAuthor(Guid authorId, Guid courseId) {
 
             if (!_courseLibraryRepository.AuthorExists(authorId))
