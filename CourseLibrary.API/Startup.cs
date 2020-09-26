@@ -28,10 +28,19 @@ namespace CourseLibrary.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(setupAction => {
-                setupAction.ReturnHttpNotAcceptable = true;
+            services.AddResponseCaching();
 
-            }).AddNewtonsoftJson(setupAction => {
+            services.AddControllers(setupAction =>
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                setupAction.CacheProfiles.Add("240SecondsCacheProfile", new CacheProfile()
+                {
+                    Duration = 240
+                });
+
+
+            }).AddNewtonsoftJson(setupAction =>
+            {
                 setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             })
               .AddXmlDataContractSerializerFormatters()
@@ -58,6 +67,7 @@ namespace CourseLibrary.API
                     });
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
+            services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
@@ -85,6 +95,8 @@ namespace CourseLibrary.API
                     });
                 });
             }
+
+            app.UseResponseCaching();
 
             app.UseRouting();
 
